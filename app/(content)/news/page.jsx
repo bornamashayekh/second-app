@@ -1,39 +1,22 @@
-'use client';
-import NewsList from "@/components/NewsList";
-import { useEffect, useState } from "react";
 
-export default function NewsPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
-  const [news, setNews] = useState();
-  useEffect(() => {
-    async function fetchNews() {
-      setIsLoading(true);
+import NewsList from "@/components/NewsList";
+
+
+export default async function NewsPage() {
+
+
+  
       const respones =await fetch("http://localhost:8080/news");
-      if (!respones.ok) {
-        setError('failed to fetch the news');
-        setIsLoading(false);
-      }
-      const news = await respones.json();
-      setNews(news);
-      setIsLoading(false);
-  }
-    fetchNews();  
-  }, [])
-  if (isLoading) {
-    return <p>is loading ...</p>
-  }
-  if (error) {
-    return <p>{error}</p>
-  }
-  let newsContent;
-  if (news) {
-    newsContent = <NewsList news={news}></NewsList>;
-  }
+  if (!response.ok) {
+    throw new Error('failed to fetch the data');
+     }
+
+  news = await respones.json();
   return (
     <>
       <h1>news page</h1>
-   {newsContent}
+
+   {<NewsList news={news}></NewsList>}
     </>
   );
 }
